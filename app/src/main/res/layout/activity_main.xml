@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight=".9"
+    android:orientation="vertical">
+            <TextView
+                android:id="@+id/titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Ejercicio Tecnico"
+                android:textSize="35dp"
+                android:textStyle="bold"/>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/Linlay1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titulo">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/purple_500"
+                tools:text="Sku:"
+                android:text="Sku"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <EditText
+                android:id="@+id/EditText_Sku"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/black"
+                android:hint="000000"
+                android:inputType="number"
+                android:maxLength="6"/>
+            <Button
+                android:id="@+id/Buscar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Buscar"/>
+            <CheckBox android:id="@+id/checkbox_Descontinuado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Descontinuado" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Linlay2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linlay1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/purple_500"
+                tools:text="Articulo:"
+                android:text="Articulo:"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <EditText
+                android:id="@+id/EditText_Articulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/black"
+                android:hint="Consola ps5"
+                android:inputType="text"
+                android:maxLength="15"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Linlay3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linlay2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/purple_500"
+                tools:text="Marca:"
+                android:text="Marca:"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <EditText
+                android:id="@+id/EditText_Marca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/black"
+                android:hint="Sony"
+                android:inputType="text"
+                android:maxLength="15"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Linlay4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linlay3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Modelo:"
+                android:textColor="@color/purple_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Modelo:" />
+
+            <EditText
+                android:id="@+id/EditText_Modelo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="10dp"
+                android:hint="ps5 Slim"
+                android:inputType="text"
+                android:maxLength="20"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Linlay5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linlay4">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/purple_500"
+                tools:text="Departamento:"
+                android:text="Departamento:"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <Spinner
+                android:id="@+id/spinner_Departamento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Linlay6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linlay5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/purple_500"
+                tools:text="Clase:"
+                android:text="Clase:"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <Spinner
+                android:id="@+id/spinner_Clase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Linlay7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linlay6">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/purple_500"
+                tools:text="Familia:"
+                android:text="Familia:"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <Spinner
+                android:id="@+id/spinner_Familia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Linlay8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linlay7">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/purple_500"
+                tools:text="Stock:"
+                android:text="Stock"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <EditText
+                android:id="@+id/EditText_Stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="0dp"
+                android:textColor="@color/black"
+                android:hint="000000000"
+                android:inputType="number"
+                android:maxLength="9"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/purple_500"
+                tools:text="Cantidad:"
+                android:text="Cantidad"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <EditText
+                android:id="@+id/EditText_Cantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/black"
+                android:hint="000000000"
+                android:inputType="number"
+                android:maxLength="9"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Linlay9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Linlay8">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/purple_500"
+                tools:text="FechaAlta:"
+                android:text="FechaAlta"/>
+            <EditText
+                android:id="@+id/EditText_FechaAlta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="0dp"
+                android:textColor="@color/black"
+                android:hint="01/01/1900"
+                android:inputType="date"
+                android:clickable="true"
+                android:focusable="false"
+                android:maxLength="10"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="5dp"
+                android:textColor="@color/purple_500"
+                tools:text="Fecha Baja:"
+                android:text="Fecha Baja" />
+            <EditText
+                android:id="@+id/EditText_FechaBaja"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="0dp"
+                android:textColor="@color/black"
+                android:hint="01/01/1900"
+                android:inputType="date"
+                android:clickable="true"
+                android:focusable="false"
+                android:maxLength="10"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/Linlay10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@id/Linlay9">
+            <Button
+                android:id="@+id/Limpiar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="Limpiar"/>
+            <Button
+                android:id="@+id/Editar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="Editar"/>
+            <Button
+                android:id="@+id/Eliminar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:text="Eliminar"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Linlay11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@id/Linlay10">
+            <Button
+                android:id="@+id/Agregar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Agregar"/>
+        </LinearLayout>
+</LinearLayout>
+    </FrameLayout>
+</RelativeLayout>
