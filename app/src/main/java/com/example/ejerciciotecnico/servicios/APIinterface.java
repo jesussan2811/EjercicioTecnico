@@ -22,7 +22,7 @@ public interface APIinterface {
 
     //OBTENER ARTICULO
     @GET("/articulos/{id}")
-    Call<ModeloArticulos>consultarArticulo(@Path("id") int id);
+    Call<List<ModeloArticulos>>consultarArticulo(@Path("id") int id);
 
     //INSERTAR Y ACTUALIZAR ARTICULO
     @POST("/addArticulo")

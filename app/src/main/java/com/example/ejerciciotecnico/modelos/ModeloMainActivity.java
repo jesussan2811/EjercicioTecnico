@@ -25,17 +25,20 @@ public class ModeloMainActivity {
 
     public void consultarArticulo(int id){
         APIinterface apiInterface = RetrifitInstance.getRetrofitInstance("http://192.168.100.9:4040/").create(APIinterface.class);
-        Call<ModeloArticulos> call = apiInterface.consultarArticulo(id);
-        call.enqueue(new Callback<ModeloArticulos>() {
+        Call<List<ModeloArticulos>> call = apiInterface.consultarArticulo(id);
+        call.enqueue(new Callback<List<ModeloArticulos>>() {
             @Override
-            public void onResponse(Call<ModeloArticulos> call, Response<ModeloArticulos> response) {
-                ModeloArticulos articulo = (ModeloArticulos) response.body();
+            public void onResponse(Call<List<ModeloArticulos>> call, Response<List<ModeloArticulos>> response) {
+                List<ModeloArticulos> articulos = new ArrayList<>();
+                articulos = (List<ModeloArticulos>) response.body();
+                ModeloArticulos articulo = articulos.get(0);
                 mainActivity.llenarArticulo(articulo);
             }
 
             @Override
-            public void onFailure(Call<ModeloArticulos> call, Throwable t) {
+            public void onFailure(Call<List<ModeloArticulos>> call, Throwable t) {
                 System.out.println("fallo al consultar");
+                System.out.println(t.getMessage());
             }
         });
     }
@@ -142,8 +145,8 @@ public class ModeloMainActivity {
             //Aqui se obtiene la respuesta del servicio
             @Override
             public void onResponse(Call<List<ModeloArticulos>> call, Response<List<ModeloArticulos>> response) {
-                ArrayList<ModeloArticulos> articulos = new ArrayList<>();
-                articulos = (ArrayList<ModeloArticulos>) response.body();
+                List<ModeloArticulos> articulos = new ArrayList<>();
+                articulos = (List<ModeloArticulos>) response.body();
                 //se manda a llamar metodo para mostrar los resultados del servicio
                 mainActivity.obtenerArticulos(articulos);
             }
@@ -151,6 +154,7 @@ public class ModeloMainActivity {
             @Override
             public void onFailure(Call<List<ModeloArticulos>> call, Throwable t) {
                 System.out.println("no funciono");
+                System.out.println(t.getMessage());
             }
         });
     }

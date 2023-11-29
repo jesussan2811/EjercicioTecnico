@@ -19,13 +19,14 @@ import com.example.ejerciciotecnico.entidades.RespuestaApi;
 import com.example.ejerciciotecnico.modelos.ModeloMainActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<ModeloDepartamentos> listaDepartamentos;
     ArrayList<ModeloClases> listaClases;
     ArrayList<ModeloFamilias> listaFamilias;
-    ArrayList<ModeloArticulos> listaArticulos;
+    List<ModeloArticulos> listaArticulos;
     ModeloArticulos miArticulo;
 
     EditText txtSku;
@@ -88,6 +89,22 @@ public class MainActivity extends AppCompatActivity {
 
         bloquear_campos();
 
+        btnAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sku = txtSku.getText().toString();
+                String articulo = txtArticulo.getText().toString();
+                String marca = txtMarca.getText().toString();
+                String modelo = txtModelo.getText().toString();
+                String stock =  txtStock.getText().toString();
+                String cantidad = txtCantidad.getText().toString();
+                String fechaAlta = txtFechaAlta.getText().toString();
+                String fechaBaja = txtFechaBaja.getText().toString();
+                //String descontinuado = cbDescontinuado.get
+
+            }
+        });
+
         btnLimpiar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,11 +129,20 @@ public class MainActivity extends AppCompatActivity {
                 {
                     int skuBuscar = Integer.parseInt(txSku);
                     modeloMainActivity.consultarArticulo(skuBuscar);
-                    modeloMainActivity.getArticulos();
-                    System.out.println(miArticulo.getSKU());
+                    //modeloMainActivity.getArticulos();
+                    //System.out.println(listaArticulos.get(0).getSKU());
+                    //System.out.println(miArticulo.getSKU());
                     if (skuBuscar == miArticulo.getSKU())
                     {
                         System.out.println("el articulo ya existe");
+                        txtSku.setText(miArticulo.getSKU());
+                        txtArticulo.setText(miArticulo.getARTICULO());
+                        txtMarca.setText(miArticulo.getMARCA());
+                        txtModelo.setText(miArticulo.getMODELO());
+                        txtStock.setText(miArticulo.getSTOCK());
+                        txtCantidad.setText(miArticulo.getCANTIDAD());
+                        txtFechaAlta.setText(miArticulo.getFECHAALTA());
+                        txtFechaBaja.setText(miArticulo.getFECHABAJA());
                         desbloqueo_campos_encontrado();
                     }else{
                         System.out.println("el articulo no existe");
@@ -128,6 +154,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
     }
     public void bloquear_campos(){
@@ -272,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
     public void obtenerFamilias(ArrayList<ModeloFamilias> familias){
         listaFamilias = familias;
     }
-    public void obtenerArticulos(ArrayList<ModeloArticulos> articulos){
+    public void obtenerArticulos(List<ModeloArticulos> articulos){
         listaArticulos = articulos;
         System.out.println(listaArticulos.get(0).getARTICULO());
     }
