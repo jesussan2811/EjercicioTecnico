@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ModeloFamilias> listaFamilias;
     List<ModeloArticulos> listaArticulos;
     ModeloArticulos miArticulo;
+    ModeloArticulos unArticulo;
 
     EditText txtSku;
     EditText txtArticulo;
@@ -82,9 +84,27 @@ public class MainActivity extends AppCompatActivity {
 
         modeloMainActivity = new ModeloMainActivity(this);
 
-        modeloMainActivity.getArticulos();
+        listaDepartamentos = new ArrayList<>();
+        listaClases = new ArrayList<>();
+        listaFamilias = new ArrayList<>();
 
-        miArticulo= new ModeloArticulos();
+        modeloMainActivity.getArticulos();
+        modeloMainActivity.getDepartamentos();
+        modeloMainActivity.getClases();
+        modeloMainActivity.getFamilias();
+
+        /*ArrayAdapter<ModeloDepartamentos> adapterDepartamento = new ArrayAdapter<>(getApplicationContext(), androidx.constraintlayout.widget.R.layout
+                .support_simple_spinner_dropdown_item, listaDepartamentos);
+        ArrayAdapter<ModeloClases> adapterClase = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout
+                .support_simple_spinner_dropdown_item, listaClases);
+        ArrayAdapter<ModeloFamilias> adapterFamilia = new ArrayAdapter<>(getApplicationContext(), androidx.appcompat.R.layout
+                .support_simple_spinner_dropdown_item, listaFamilias);
+
+        spinDepartamento.setAdapter(adapterDepartamento);
+        spinClase.setAdapter(adapterClase);
+        spinFamilia.setAdapter(adapterFamilia);*/
+
+        //miArticulo= new ModeloArticulos();
         listaArticulos = new ArrayList<ModeloArticulos>();
 
         bloquear_campos();
@@ -117,32 +137,60 @@ public class MainActivity extends AppCompatActivity {
                 txtFechaAlta.setText("");
                 txtFechaBaja.setText("");
 
+                btnBuscar.setEnabled(true);
+                btnBuscar.setBackgroundColor(Color.parseColor("#673AB7"));
+
                 bloquear_campos();
             }
         });
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                modeloMainActivity.getArticulos();
                 String txSku = txtSku.getText().toString();
                 System.out.println(txSku);
                 if(txSku.length() == 6)
                 {
+                    btnBuscar.setEnabled(false);
+                    btnBuscar.setBackgroundColor(Color.LTGRAY);
+
                     int skuBuscar = Integer.parseInt(txSku);
-                    modeloMainActivity.consultarArticulo(skuBuscar);
+
+                    ArrayAdapter<String> adapterDepartamento = new ArrayAdapter<>(getApplicationContext(), android.R.layout
+                            .simple_spinner_dropdown_item, obtenerArrayNombresDepa(listaDepartamentos));
+                    ArrayAdapter<String> adapterClase = new ArrayAdapter<>(getApplicationContext(), android.R.layout
+                            .simple_spinner_dropdown_item, obtenerArrayNombresClas(listaClases));
+                    ArrayAdapter<String> adapterFamilia = new ArrayAdapter<>(getApplicationContext(), android.R.layout
+                            .simple_spinner_dropdown_item, obtenerArrayNombresFam(listaFamilias));
+
+                    spinDepartamento.setAdapter(adapterDepartamento);
+                    spinClase.setAdapter(adapterClase);
+                    spinFamilia.setAdapter(adapterFamilia);
+
                     //modeloMainActivity.getArticulos();
                     //System.out.println(listaArticulos.get(0).getSKU());
                     //System.out.println(miArticulo.getSKU());
-                    if (skuBuscar == miArticulo.getSKU())
+                    if (buscarEnListaArticulos(skuBuscar))
                     {
                         System.out.println("el articulo ya existe");
-                        txtSku.setText(miArticulo.getSKU());
-                        txtArticulo.setText(miArticulo.getARTICULO());
-                        txtMarca.setText(miArticulo.getMARCA());
-                        txtModelo.setText(miArticulo.getMODELO());
-                        txtStock.setText(miArticulo.getSTOCK());
-                        txtCantidad.setText(miArticulo.getCANTIDAD());
-                        txtFechaAlta.setText(miArticulo.getFECHAALTA());
-                        txtFechaBaja.setText(miArticulo.getFECHABAJA());
+                        txtSku.setText(unArticulo.getSKU()+"");
+                        txtArticulo.setText(unArticulo.getARTICULO());
+                        txtMarca.setText(unArticulo.getMARCA());
+                        txtModelo.setText(unArticulo.getMODELO());
+                        txtStock.setText(unArticulo.getSTOCK()+"");
+                        txtCantidad.setText(unArticulo.getCANTIDAD()+"");
+                        txtFechaAlta.setText(unArticulo.getFECHAALTA());
+                        txtFechaBaja.setText(unArticulo.getFECHABAJA());
+
+                        int positionDepa = posicionDepa(unArticulo.getDEPARTAMENTO());
+                        spinDepartamento.setSelection(positionDepa);
+
+                        int positionClas = posicionClas(unArticulo.getCLASE());
+                        spinClase.setSelection(positionClas);
+
+                        int positionFam = posicionFam(unArticulo.getFAMILIA());
+                        spinFamilia.setSelection(positionFam);
+
                         desbloqueo_campos_encontrado();
                     }else{
                         System.out.println("el articulo no existe");
@@ -222,29 +270,34 @@ public class MainActivity extends AppCompatActivity {
         txtArticulo.setFocusable(true);
         txtArticulo.setEnabled(true);
         txtArticulo.setCursorVisible(true);
+        txtArticulo.setTextIsSelectable(true);
         txtArticulo.setBackgroundColor(Color.TRANSPARENT);
 
         txtMarca.setFocusable(true);
         txtMarca.setEnabled(true);
         txtMarca.setCursorVisible(true);
+        txtMarca.setTextIsSelectable(true);
         txtMarca.setBackgroundColor(Color.TRANSPARENT);
 
         txtModelo.setFocusable(true);
         txtModelo.setEnabled(true);
         txtModelo.setCursorVisible(true);
+        txtModelo.setTextIsSelectable(true);
         txtModelo.setBackgroundColor(Color.TRANSPARENT);
 
         txtStock.setFocusable(true);
         txtStock.setEnabled(true);
         txtStock.setCursorVisible(true);
+        txtStock.setTextIsSelectable(true);
         txtStock.setBackgroundColor(Color.TRANSPARENT);
 
         txtCantidad.setFocusable(true);
         txtCantidad.setEnabled(true);
         txtCantidad.setCursorVisible(true);
+        txtCantidad.setTextIsSelectable(true);
         txtCantidad.setBackgroundColor(Color.TRANSPARENT);
 
-        txtFechaAlta.setFocusable(true);
+       /* txtFechaAlta.setFocusable(true);
         txtFechaAlta.setEnabled(true);
         txtFechaAlta.setCursorVisible(true);
         txtFechaAlta.setBackgroundColor(Color.TRANSPARENT);
@@ -252,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
         txtFechaBaja.setFocusable(true);
         txtFechaBaja.setEnabled(true);
         txtFechaBaja.setCursorVisible(true);
-        txtFechaBaja.setBackgroundColor(Color.TRANSPARENT);
+        txtFechaBaja.setBackgroundColor(Color.TRANSPARENT);*/
 
         /*cbDescontinuado.setFocusable(true);
         cbDescontinuado.setEnabled(true);
@@ -275,10 +328,10 @@ public class MainActivity extends AppCompatActivity {
         cbDescontinuado.setBackgroundColor(Color.TRANSPARENT);
 
         btnEditar.setEnabled(true);
-        btnEditar.setBackgroundColor(Color.parseColor("#9C27B0"));
+        btnEditar.setBackgroundColor(Color.parseColor("#673AB7"));
 
         btnEliminar.setEnabled(true);
-        btnEliminar.setBackgroundColor(Color.parseColor("#9C27B0"));
+        btnEliminar.setBackgroundColor(Color.parseColor("#673AB7"));
 
     }
     public void desbloqueo_campos_noencontrado() {
@@ -304,6 +357,21 @@ public class MainActivity extends AppCompatActivity {
         listaArticulos = articulos;
         System.out.println(listaArticulos.get(0).getARTICULO());
     }
+    public boolean buscarEnListaArticulos(int sku){
+        int i = 0;
+        int skuLista;
+
+        do {
+            skuLista = listaArticulos.get(i).getSKU();
+            if (sku == skuLista) {
+                unArticulo = listaArticulos.get(i);
+                return true;
+            }
+            i++;
+        }while (i < listaArticulos.size());
+
+        return false;
+    }
     public void llenarArticulo(ModeloArticulos articulo){
         miArticulo = articulo;
     }
@@ -312,5 +380,64 @@ public class MainActivity extends AppCompatActivity {
     }
     public void respuesta(RespuestaApi respuestaApi){
         Toast.makeText(this,respuestaApi.mensaje,Toast.LENGTH_LONG).show();
+    }
+
+
+    public ArrayList<String> obtenerArrayNombresDepa(ArrayList<ModeloDepartamentos> aux){
+        ArrayList<String> arreglo = new ArrayList<>();
+        for (int i = 0; i < aux.size(); i++) {
+            arreglo.add(aux.get(i).getDEPARTAMENTOID() + ". " +
+                    aux.get(i).getDEPARTAMENTONAME());
+        }
+        return arreglo;
+    }
+    public ArrayList<String> obtenerArrayNombresClas(ArrayList<ModeloClases> aux){
+        ArrayList<String> arreglo = new ArrayList<>();
+        for (int i = 0; i < aux.size(); i++) {
+            arreglo.add(aux.get(i).getCLASEID() + ". " +
+                    aux.get(i).getCLASENAME());
+        }
+        return arreglo;
+    }
+    public ArrayList<String> obtenerArrayNombresFam(ArrayList<ModeloFamilias> aux){
+        ArrayList<String> arreglo = new ArrayList<>();
+        for (int i = 0; i < aux.size(); i++) {
+            arreglo.add(aux.get(i).getFAMILIAID() + ". " +
+                    aux.get(i).getFAMILIANAME());
+        }
+        return arreglo;
+    }
+    public int posicionDepa(int id){
+        int pos = 0;
+        do
+        {
+            if (id == listaDepartamentos.get(pos).getDEPARTAMENTOID()){
+                return pos;
+            }
+            pos++;
+        }while(pos < listaDepartamentos.size());
+        return pos;
+    }
+    public int posicionClas(int id){
+        int pos = 0;
+        do
+        {
+            if (id == listaClases.get(pos).getCLASEID()){
+                return pos;
+            }
+            pos++;
+        }while(pos < listaClases.size());
+        return pos;
+    }
+    public int posicionFam(int id){
+        int pos = 0;
+        do
+        {
+            if (id == listaFamilias.get(pos).getFAMILIAID()){
+                return pos;
+            }
+            pos++;
+        }while(pos < listaFamilias.size());
+        return pos;
     }
 }

@@ -348,36 +348,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="Limpiar"/>
+                android:text="clear"/>
             <Button
                 android:id="@+id/Editar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="Editar"/>
+                android:text="Edit"/>
             <Button
                 android:id="@+id/Eliminar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="Eliminar"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/Linlay11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_below="@id/Linlay10">
+                android:text="delete"/>
             <Button
                 android:id="@+id/Agregar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="Agregar"/>
+                android:text="upload"/>
         </LinearLayout>
+
 </LinearLayout>
     </FrameLayout>
 </RelativeLayout>
