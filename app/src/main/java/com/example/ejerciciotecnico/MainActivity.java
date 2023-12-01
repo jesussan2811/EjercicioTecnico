@@ -19,7 +19,10 @@ import com.example.ejerciciotecnico.entidades.ModeloFamilias;
 import com.example.ejerciciotecnico.entidades.RespuestaApi;
 import com.example.ejerciciotecnico.modelos.ModeloMainActivity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnBuscar;
     Button btnLimpiar;
-    Button btnEditar;
+    Button btnBaja;
     Button btnEliminar;
     Button btnAgregar;
 
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnBuscar = (Button) findViewById(R.id.Buscar);
         btnLimpiar = (Button) findViewById(R.id.Limpiar);
-        btnEditar = (Button) findViewById(R.id.Editar);
+        btnBaja = (Button) findViewById(R.id.Baja);
         btnEliminar = (Button) findViewById(R.id.Eliminar);
         btnAgregar = (Button) findViewById(R.id.Agregar);
 
@@ -112,16 +115,34 @@ public class MainActivity extends AppCompatActivity {
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String sku = txtSku.getText().toString();
+                int sku = unArticulo.getSKU();
                 String articulo = txtArticulo.getText().toString();
                 String marca = txtMarca.getText().toString();
                 String modelo = txtModelo.getText().toString();
-                String stock =  txtStock.getText().toString();
-                String cantidad = txtCantidad.getText().toString();
                 String fechaAlta = txtFechaAlta.getText().toString();
                 String fechaBaja = txtFechaBaja.getText().toString();
-                //String descontinuado = cbDescontinuado.get
 
+                String tstock =  txtStock.getText().toString();
+                int stock =  Integer.parseInt(tstock);
+                String tcantidad = txtCantidad.getText().toString();
+                int cantidad = Integer.parseInt(tcantidad);
+
+                int descontinuado = 0;
+                if(cbDescontinuado.isChecked()) {
+                    descontinuado = 1;
+                }
+                String tDepartamento = spinDepartamento.getSelectedItem().toString().substring(0,1);
+                String tClase = spinClase.getSelectedItem().toString().substring(0,2);
+                String tFamilia = spinFamilia.getSelectedItem().toString().substring(0,3);
+
+                int departamento = Integer.parseInt(tDepartamento);
+                int clase = Integer.parseInt(tClase);
+                int familia = Integer.parseInt(tFamilia);
+
+                ModeloArticulos nvoArticulo = new ModeloArticulos(sku,articulo,marca,modelo,departamento,clase,familia,fechaAlta,stock,cantidad,descontinuado,fechaBaja);
+                if (){
+
+                }
             }
         });
 
@@ -136,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
                 txtCantidad.setText("");
                 txtFechaAlta.setText("");
                 txtFechaBaja.setText("");
+
+                cbDescontinuado.setChecked(false);
 
                 btnBuscar.setEnabled(true);
                 btnBuscar.setBackgroundColor(Color.parseColor("#673AB7"));
@@ -182,6 +205,10 @@ public class MainActivity extends AppCompatActivity {
                         txtFechaAlta.setText(unArticulo.getFECHAALTA());
                         txtFechaBaja.setText(unArticulo.getFECHABAJA());
 
+                        boolean descontinuado = false;
+                        if (unArticulo.getDESCONTINUADO() == 1){descontinuado = true;}
+                        cbDescontinuado.setChecked(descontinuado);
+
                         int positionDepa = posicionDepa(unArticulo.getDEPARTAMENTO());
                         spinDepartamento.setSelection(positionDepa);
 
@@ -194,12 +221,24 @@ public class MainActivity extends AppCompatActivity {
                         desbloqueo_campos_encontrado();
                     }else{
                         System.out.println("el articulo no existe");
+                        long ahora = System.currentTimeMillis();
+                        Date fecha = new Date(ahora);
+                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                        String salida = df.format(fecha);
+                        txtFechaAlta.setText(salida);
+
                         desbloqueo_campos_noencontrado();
                     }
                     desbloquear_campos();
                 }else{
                     Toast.makeText(getBaseContext(),"el Sku debe tener 6 digitos",Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+        btnBaja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
@@ -256,14 +295,15 @@ public class MainActivity extends AppCompatActivity {
         spinFamilia.setFocusable(false);
         spinFamilia.setEnabled(false);
 
-        btnEditar.setEnabled(false);
-        btnEditar.setBackgroundColor(Color.LTGRAY);
+        btnBaja.setEnabled(false);
+        btnBaja.setBackgroundColor(Color.LTGRAY);
 
         btnEliminar.setEnabled(false);
         btnEliminar.setBackgroundColor(Color.LTGRAY);
 
         btnAgregar.setEnabled(false);
         btnAgregar.setBackgroundColor(Color.LTGRAY);
+        btnAgregar.setText("UPLOAD");
     }
 
     public void desbloquear_campos() {
@@ -327,21 +367,24 @@ public class MainActivity extends AppCompatActivity {
         cbDescontinuado.setCursorVisible(true);
         cbDescontinuado.setBackgroundColor(Color.TRANSPARENT);
 
-        btnEditar.setEnabled(true);
-        btnEditar.setBackgroundColor(Color.parseColor("#673AB7"));
+        btnBaja.setEnabled(true);
+        btnBaja.setBackgroundColor(Color.parseColor("#673AB7"));
 
         btnEliminar.setEnabled(true);
         btnEliminar.setBackgroundColor(Color.parseColor("#673AB7"));
 
+        btnAgregar.setEnabled(true);
+        btnAgregar.setBackgroundColor(Color.parseColor("#673AB7"));
+        btnAgregar.setText("EDIT");
     }
     public void desbloqueo_campos_noencontrado() {
-        cbDescontinuado.setFocusable(true);
+        /*cbDescontinuado.setFocusable(true);
         cbDescontinuado.setEnabled(true);
         cbDescontinuado.setCursorVisible(true);
-        cbDescontinuado.setBackgroundColor(Color.TRANSPARENT);
+        cbDescontinuado.setBackgroundColor(Color.TRANSPARENT);*/
 
         btnAgregar.setEnabled(true);
-        btnAgregar.setBackgroundColor(Color.parseColor("#9C27B0"));
+        btnAgregar.setBackgroundColor(Color.parseColor("#673AB7"));
     }
 
     public void obtenerDepartamentos(ArrayList<ModeloDepartamentos> departamentos){
