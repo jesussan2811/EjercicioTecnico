@@ -115,7 +115,9 @@ public class MainActivity extends AppCompatActivity {
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int sku = unArticulo.getSKU();
+                String tsku = txtArticulo.getText().toString();
+                int sku = Integer.parseInt(tsku);
+
                 String articulo = txtArticulo.getText().toString();
                 String marca = txtMarca.getText().toString();
                 String modelo = txtModelo.getText().toString();
@@ -139,10 +141,11 @@ public class MainActivity extends AppCompatActivity {
                 int clase = Integer.parseInt(tClase);
                 int familia = Integer.parseInt(tFamilia);
 
-                ModeloArticulos nvoArticulo = new ModeloArticulos(sku,articulo,marca,modelo,departamento,clase,familia,fechaAlta,stock,cantidad,descontinuado,fechaBaja);
-                if (){
-
+                if (comprobarDatos(sku,articulo,marca,modelo,tDepartamento,tClase,tFamilia,fechaAlta,tstock,tcantidad,descontinuado,fechaBaja)){
+                    ModeloArticulos nvoArticulo = new ModeloArticulos(sku,articulo,marca,modelo,departamento,clase,familia,fechaAlta,stock,cantidad,descontinuado,fechaBaja);
+                    Toast.makeText(getBaseContext(),"tu regisro esta correcto Felicidades",Toast.LENGTH_LONG).show();
                 }
+                modeloMainActivity.getArticulos();
             }
         });
 
@@ -169,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                modeloMainActivity.getArticulos();
                 String txSku = txtSku.getText().toString();
                 System.out.println(txSku);
                 if(txSku.length() == 6)
@@ -226,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                         String salida = df.format(fecha);
                         txtFechaAlta.setText(salida);
-
+                        txtFechaBaja.setText("1900-01-01");
                         desbloqueo_campos_noencontrado();
                     }
                     desbloquear_campos();
@@ -482,5 +484,26 @@ public class MainActivity extends AppCompatActivity {
             pos++;
         }while(pos < listaFamilias.size());
         return pos;
+    }
+    public boolean comprobarDatos(int csku,String carticulo,String cmarca,String cmodelo,String cdepartamento,String cclase,String cfamilia,String cfechaAlta,String cstock,String ccantidad,int cdescontinuado,String cfechaBaja){
+        if(csku < 100000){ Toast.makeText(getBaseContext(),"el Sku debe tener 6 digitos",Toast.LENGTH_LONG).show(); return false;}
+        if(carticulo.length() < 1){mensajeTextoVacio(); return false;}
+        if(cmarca.length() < 1){mensajeTextoVacio(); return false;}
+        if(cmodelo.length() < 1){mensajeTextoVacio(); return false;}
+        if(cdepartamento.length() < 1){Toast.makeText(getBaseContext(),"el departamento esta vacio",Toast.LENGTH_LONG).show(); return false;}
+        if(cdepartamento.equals(cclase.substring(0,1))){Toast.makeText(getBaseContext(),"la clase no coincide con el departamento",Toast.LENGTH_LONG).show(); return false;}
+        if(cclase.equals(cfamilia.substring(0,2))){Toast.makeText(getBaseContext(),"la familia no coincide con la clase",Toast.LENGTH_LONG).show(); return false;}
+        if(cfechaAlta.length() < 1){Toast.makeText(getBaseContext(),"la fecha de alta se encuentra vacia",Toast.LENGTH_LONG).show(); return false;}
+        if(cfechaBaja.length() < 1){Toast.makeText(getBaseContext(),"la fecha de baja esta vacia",Toast.LENGTH_LONG).show(); return false;}
+        if(cstock.length() < 1){mensajeTextoVacio(); return false;}
+        if(ccantidad.length() < 1){mensajeTextoVacio(); return false;}
+        int cdstock=Integer.parseInt(cstock),cdcantidad=Integer.parseInt(ccantidad);
+        if(cdstock < cdcantidad){Toast.makeText(getBaseContext(),"la cantidad no puede ser mayor al stock",Toast.LENGTH_LONG).show(); return false;}
+        if(cdescontinuado > 1 || cdescontinuado < 0){Toast.makeText(getBaseContext(),"hay un error en el campo descontinuado",Toast.LENGTH_LONG).show(); return false;}
+
+        return true;
+    }
+    public void mensajeTextoVacio(){
+        Toast.makeText(getBaseContext(),"todos los campos de texto deben ser llenados",Toast.LENGTH_LONG).show();
     }
 }
